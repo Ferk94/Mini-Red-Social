@@ -1,0 +1,13 @@
+# Ignorar node_modules en ambos client y api
+/node_modules/
+/api/node_modules/
+/client/node_modules/
+
+# Ignorar archivos de entorno
+.env
+/api/.env
+/client/.env
+
+# Otros archivos que no quieras subir
+.DS_Store
+npm-debug.log
