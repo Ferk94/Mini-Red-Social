@@ -1,4 +1,3 @@
-// app/page.tsx
 import { getPosts } from './lib/api';
 import Home from './Home';
 
