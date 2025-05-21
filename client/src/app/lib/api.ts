@@ -32,3 +32,9 @@ export async function deletePost(id: string) {
   if (!res.ok) throw new Error('Error al eliminar el post');
   return res.json();
 }
+
+export async function getPost(id: string) {
+  const res = await fetch(`${BASE_URL}/posts/${id}`);
+  if (!res.ok) throw new Error('Error al traer el post');
+  return res.json();
+}

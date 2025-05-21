@@ -39,3 +39,10 @@ exports.updateLike = (req, res) => {
   console.log(posts, 'posts en backend')
   res.json('likes actualizados')
 }
+
+exports.getPostById = (req, res) => {
+  const index = posts.findIndex(p => p.id === parseInt(req.params.id));
+  if (index === -1) return res.status(404).send('Post no encontrado');
+  const post = posts[index];
+  res.json(post)
+}

@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 import { createPost, deletePost, likePost } from './lib/api';
 
@@ -174,6 +175,12 @@ export default function Home({ initialPosts }: Props) {
                   </button>
                   <span className="text-sm text-gray-600">{post.likes} me gusta</span>
                 </div>
+                <Link
+                  href={`/posts/${post.id}`}
+                  className="text-blue-500 underline"
+                >
+                  Ver más
+               </Link>
               </li>
             ))}
           </ul>
