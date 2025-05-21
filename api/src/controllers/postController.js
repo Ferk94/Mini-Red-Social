@@ -35,7 +35,7 @@ exports.deletePost = (req, res) => {
 exports.updateLike = (req, res) => {
   console.log('le pego al backend de updateLike?')
   const index = posts.findIndex(p => p.id === parseInt(req.params.id));
-  posts[index].likes = posts[index].likes + 1
+  posts[index].likes = posts[index].likes === 1 ? 0 : 1;
   console.log(posts, 'posts en backend')
   res.json('likes actualizados')
 }
