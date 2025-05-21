@@ -7,18 +7,13 @@ const server = express();
 server.name = "api";
 
 server.use(express.json());
-server.use(cors());
+server.use(cors({
+  origin: ['http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
 
-server.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // aca dejo en * para que puedan acceder todos
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-  next();
-});
 
 server.use("/api", routes);
 

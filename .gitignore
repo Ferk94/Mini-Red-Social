@@ -11,3 +11,5 @@
 # Otros archivos que no quieras subir
 .DS_Store
 npm-debug.log
+
+.next/
