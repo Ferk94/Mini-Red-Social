@@ -2,7 +2,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 export async function getPosts() {
   const res = await fetch(`${BASE_URL}/posts`);
-  console.log(res, 'que tenemos en res del backend?')
+  // console.log(res, 'que tenemos en res del backend?')
   if (!res.ok) throw new Error('Error al traer los posts');
   return res.json();
 }
@@ -34,7 +34,11 @@ export async function deletePost(id: string) {
 }
 
 export async function getPost(id: string) {
-  const res = await fetch(`${BASE_URL}/posts/${id}`);
+  const res = await fetch(`${BASE_URL}/posts/${id}`, {
+    method: 'GET',
+  });
+
+  const data = res.json()
   if (!res.ok) throw new Error('Error al traer el post');
-  return res.json();
+  return data;
 }

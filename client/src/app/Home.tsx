@@ -12,14 +12,18 @@ type Post = {
   likes: number;
 };
 
+type FormData = {
+  name: string;
+  message: string;
+};
+
 type Props = {
   initialPosts: Post[];
 };
 
 export default function Home({ initialPosts }: Props) {
   const [posts, setPosts] = useState<Post[]>(initialPosts);
-  const [name, setName] = useState('');
-  const [message, setMessage] = useState('');
+  const [formData, setFormData] = useState<FormData>({ name: '', message: '' });
   const [errors, setErrors] = useState<{ name?: string; message?: string }>({});
   const [postToDelete, setPostToDelete] = useState<Post | null>(null);
 
@@ -35,8 +39,8 @@ export default function Home({ initialPosts }: Props) {
   };
 
   const handleChange = (field: 'name' | 'message', value: string) => {
-    if (field === 'name') setName(value);
-    else setMessage(value);
+    if (field === 'name') setFormData((prev) => ({ ...prev, name: value }));
+    else if (field === 'message') setFormData((prev) => ({ ...prev, message: value }));
 
     setErrors((prev) => {
       const newErrors = { ...prev };
@@ -56,19 +60,18 @@ export default function Home({ initialPosts }: Props) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || message.trim().length < 5) {
-      const newErrors: typeof errors = {};
-      if (!name.trim()) newErrors.name = 'El nombre es obligatorio.';
-      if (message.trim().length < 5)
-        newErrors.message = 'El mensaje debe tener al menos 5 caracteres.';
-      setErrors(newErrors);
-      return;
-    }
+    // if (!formData.name.trim() || formData.message.trim().length < 5) {
+    //   const newErrors: typeof errors = {};
+    //   if (!formData.name.trim()) newErrors.name = 'El nombre es obligatorio.';
+    //   if (formData.message.trim().length < 5)
+    //     newErrors.message = 'El mensaje debe tener al menos 5 caracteres.';
+    //   setErrors(newErrors);
+    //   return;
+    // }
 
     try {
-      await createPost(name, message);
-      setName('');
-      setMessage('');
+      await createPost(formData.name, formData.message);
+      setFormData({ name: '', message: '' });
       setErrors({});
       fetchPosts();
     } catch (err) {
@@ -104,7 +107,7 @@ export default function Home({ initialPosts }: Props) {
             <input
               type="text"
               placeholder="Tu nombre"
-              value={name}
+              value={formData.name}
               onChange={(e) => handleChange('name', e.target.value)}
               className={`w-full border rounded px-3 py-2 ${
                 errors.name ? 'border-red-500' : 'border-gray-300'
@@ -116,7 +119,7 @@ export default function Home({ initialPosts }: Props) {
           <div>
             <textarea
               placeholder="Tu mensaje"
-              value={message}
+              value={formData.message}
               onChange={(e) => handleChange('message', e.target.value)}
               className={`w-full border rounded px-3 py-2 ${
                 errors.message ? 'border-red-500' : 'border-gray-300'
@@ -128,11 +131,11 @@ export default function Home({ initialPosts }: Props) {
           <button
             type="submit"
             className={`px-4 py-2 rounded transition-colors duration-200 ${
-              errors.name || errors.message || !name.trim() || message.trim().length < 5
+              errors.name || errors.message || !formData.name.trim() || formData.message.trim().length < 5
                 ? 'bg-gray-400 text-white cursor-not-allowed'
                 : 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer'
             }`}
-            disabled={Boolean(errors.name || errors.message || !name.trim() || message.trim().length < 5)}
+            disabled={Boolean(errors.name || errors.message || !formData.name.trim() || formData.message.trim().length < 5)}
           >
             Publicar
           </button>

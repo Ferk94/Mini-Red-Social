@@ -15,6 +15,7 @@ exports.getAllPosts = (req, res) => {
 
 exports.getPostById = (req, res) => {
   const post = posts.find(p => p.id === parseInt(req.params.id));
+  console.log(post, 'post en backend de getPostById')
   post ? res.json(post) : res.status(404).send('Post no encontrado');
 };
 
@@ -40,9 +41,9 @@ exports.updateLike = (req, res) => {
   res.json('likes actualizados')
 }
 
-exports.getPostById = (req, res) => {
-  const index = posts.findIndex(p => p.id === parseInt(req.params.id));
-  if (index === -1) return res.status(404).send('Post no encontrado');
-  const post = posts[index];
-  res.json(post)
-}
+// exports.getPostById = (req, res) => {
+//   const index = posts.findIndex(p => p.id === parseInt(req.params.id));
+//   if (index === -1) return res.status(404).send('Post no encontrado');
+//   const post = posts[index];
+//   res.json(post)
+// }
